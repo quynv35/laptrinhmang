@@ -1,0 +1,5 @@
+https://rapidapi.com/DataFanatic/api/youtube-media-downloader/playground/apiendpoint_41d32934-25d1-41f0-8b52-d7bf0e8549aa
+https://www.mediafire.com/developers/core_api/1.5/download/#direct_download_link
+https://developers.google.com/drive/api/reference/rest/v3/files/download
+https://rapidapi.com/instasavers/api/facebook-videos-reels-downloader/playground/apiendpoint_13e4d81b-b32e-4a58-9efb-62433122edf2
+https://learn.microsoft.com/en-us/onedrive/developer/rest-api/api/driveitem_get_content?view=odsp-graph-online
