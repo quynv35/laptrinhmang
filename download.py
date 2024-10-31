@@ -1,5 +1,5 @@
 import requests
-import datetime
+from datetime import datetime
 import argparse
 import sys
 
@@ -12,6 +12,7 @@ def support():
     print("onedrive")
 
 def youtube(url):
+    # from pytube import YouTube
     pass
 
 def mediafire(url):
@@ -23,11 +24,27 @@ def ggdrive(url):
 def onedrive(url):
     pass
 
-def facebook(url):
-    pass
+def facebook(url_video):
+    url = "https://facebook-videos-reels-downloader.p.rapidapi.com/get-video-info"
+    querystring = {"url": url_video}
+    headers = {
+        "x-rapidapi-key": "0cc733e278mshc6dfccfbf2203f6p16914djsnc108e3d901f5",
+        "x-rapidapi-host": "facebook-videos-reels-downloader.p.rapidapi.com"
+    }
+    response = requests.get(url, headers=headers, params=querystring)
+    return response.json()["video"]["hd_video_url"]
+
 
 def download(url):
-    pass
+    now = datetime.now()
+    filename = now.strftime("%Y_%m_%d_%H_%M_%S")
+    with open(filename, "wb") as f:
+        response = requests.get(url, stream=True)
+        for chunk in response.iter_content(chunk_size=1024):
+            if chunk:
+                f.write(chunk)
+                f.flush()
+        print("Download thanh cong")
 
 def main():
     parser = argparse.ArgumentParser(description='Chương trình download file trên 1 số trang web thông dụng')
