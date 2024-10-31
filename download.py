@@ -2,6 +2,7 @@ import requests
 from datetime import datetime
 import argparse
 import sys
+import re
 
 def support():
     print("Chương trình hỗ trợ download file trên các trang web:")
@@ -32,7 +33,8 @@ def facebook(url_video):
         "x-rapidapi-host": "facebook-videos-reels-downloader.p.rapidapi.com"
     }
     response = requests.get(url, headers=headers, params=querystring)
-    return response.json()["video"]["hd_video_url"]
+    video_url = response.json()["video"]["hd_video_url"]
+    download(video_url)
 
 
 def download(url):
@@ -45,6 +47,15 @@ def download(url):
                 f.write(chunk)
                 f.flush()
         print("Download thanh cong")
+
+
+def extract_domain(url):
+    pattern = r'^(?:http[s]?://)?(?:www\.)?([^/]+)'
+    match = re.search(pattern, url)
+    if match:
+        return match.group(1)
+    else:
+        exit(1)
 
 def main():
     parser = argparse.ArgumentParser(description='Chương trình download file trên 1 số trang web thông dụng')
@@ -61,7 +72,19 @@ def main():
 
     if args.url:
         url = args.url
-        download(url)
+        domain = extract_domain(url)
+        if domain == "youtube.com":
+            youtube(url)
+        elif domain == "mediafire":
+            mediafire(url)
+        elif domain == "googledrive":
+            ggdrive(url)
+        elif domain == "facebook":
+            facebook(url)
+        elif domain == "onedrive":
+            onedrive(url)
+        else:
+            support()
 
 if __name__ == '__main__':
     main()
